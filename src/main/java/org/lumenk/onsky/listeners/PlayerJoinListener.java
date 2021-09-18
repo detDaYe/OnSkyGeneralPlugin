@@ -1,5 +1,6 @@
 package org.lumenk.onsky.listeners;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,5 +17,9 @@ public class PlayerJoinListener implements Listener {
         event.setJoinMessage(TextUtil.toColor(
                 "&b&l[&f&l+&b&l]&f " + playerName
         ));
+
+        event.getPlayer().sendMessage(
+                ChatColor.of("#7D0552") + "Hello"
+        );
     }
 }
