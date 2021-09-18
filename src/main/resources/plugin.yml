@@ -4,3 +4,6 @@ main: org.lumenk.onsky.Onsky
 api-version: 1.17
 authors: [ RomeoRKPK ]
 description: Just Plugin
+commands:
+  onskydummy:
+    description: dummy command

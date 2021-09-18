@@ -1,4 +1,4 @@
-package listeners;
+package org.lumenk.onsky.listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
