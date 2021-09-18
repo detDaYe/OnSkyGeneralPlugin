@@ -1,0 +1,6 @@
+name: Onsky
+version: '${version}'
+main: org.lumenk.onsky.Onsky
+api-version: 1.17
+authors: [ RomeoRKPK ]
+description: Just Plugin
