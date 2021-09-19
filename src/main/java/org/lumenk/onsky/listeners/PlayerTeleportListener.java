@@ -9,15 +9,6 @@ public class PlayerTeleportListener implements Listener {
 
     @EventHandler
     public void OnPlayerTeleport_forBackCommand(PlayerTeleportEvent event){
-        boolean temp = false;
-        if(!event.getFrom().getWorld().equals(event.getTo().getWorld())){
-            temp = true;
-        }else if(event.getFrom().distance(event.getTo()) >= 5.0){
-            temp = true;
-        }
-
-        if(temp){
-            BackCommand.updatePosition(event.getPlayer());
-        }
+        BackCommand.testAndUpdatePosition(event.getPlayer(), event.getFrom(), event.getTo());
     }
 }

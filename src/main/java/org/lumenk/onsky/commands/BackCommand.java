@@ -13,13 +13,27 @@ import java.util.UUID;
 public class BackCommand implements CommandExecutor {
 
     private static final HashMap<UUID, Location> lastPositon = new HashMap<>();
+    private static final HashMap<UUID, Boolean> deathFlag = new HashMap<>();
 
-    public static void updatePosition(Player player){
-        lastPositon.put(player.getUniqueId(), player.getLocation());
+    public static void testAndUpdatePosition(Player player, Location from, Location to){
+        boolean temp = false;
+        if(!from.getWorld().equals(to.getWorld())){
+            temp = true;
+        }else if(from.distance(to) >= 5.0){
+            temp = true;
+        }
+
+        if(temp)
+            lastPositon.put(player.getUniqueId(), player.getLocation());
+    }
+
+    public static void updatePosition(Player player, Location location){
+        lastPositon.put(player.getUniqueId(), location);
     }
 
     public static void removePosition(Player player){
         lastPositon.remove(player.getUniqueId());
+        deathFlag.remove(player.getUniqueId());
     }
 
     @Override
