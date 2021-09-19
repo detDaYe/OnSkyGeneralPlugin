@@ -3,8 +3,7 @@ package org.lumenk.onsky.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import utils.TextUtil;
+import org.lumenk.onsky.utils.TextUtil;
 
 public class OnSkyDummyCommand implements CommandExecutor {
     @Override

@@ -1,11 +1,10 @@
 package org.lumenk.onsky.listeners;
 
-import net.md_5.bungee.api.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.lumenk.onsky.Onsky;
-import utils.TextUtil;
+import org.lumenk.onsky.utils.TextUtil;
 
 public class PlayerJoinListener implements Listener {
 

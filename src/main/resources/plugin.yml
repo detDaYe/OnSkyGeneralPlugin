@@ -7,3 +7,11 @@ description: Just Plugin
 commands:
   onskydummy:
     description: dummy command
+  sethome:
+    description: set your home, maximum 25
+  home:
+    description: go to your home
+  homelist:
+    description: show your home list
+  delhome:
+    description: remove your home

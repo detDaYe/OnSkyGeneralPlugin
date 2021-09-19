@@ -8,8 +8,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.io.BukkitObjectInputStream;
-import utils.TextUtil;
+import org.lumenk.onsky.utils.TextUtil;
 
 import java.io.File;
 import java.io.IOException;
