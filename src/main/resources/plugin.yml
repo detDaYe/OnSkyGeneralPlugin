@@ -15,3 +15,5 @@ commands:
     description: show your home list
   delhome:
     description: remove your home
+  back:
+    description: back to previous position
