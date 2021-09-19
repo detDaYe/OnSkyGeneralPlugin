@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import utils.TextUtil;
 
-public class onSkyDummyCommand implements CommandExecutor {
+public class OnSkyDummyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         sender.sendMessage(TextUtil.toColor("&f안녕! 나는 &b창공&f의 서버를 위해 개발된 &eOnSky&6플러그인&f이라고 해!"));

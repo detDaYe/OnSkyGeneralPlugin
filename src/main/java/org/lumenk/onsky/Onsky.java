@@ -33,27 +33,8 @@ public final class Onsky extends JavaPlugin {
 
         Bukkit.getLogger().info(TextUtil.toColor("&처음으로는 &6저장 파일&e을 불러올 거야!"));
         saveFile = new YamlConfiguration();
-        try {
-            saveFile.load("plugins/onsky/save.yml");
-        } catch (IOException | InvalidConfigurationException e) {
-            Bukkit.getLogger().warning("&c이런! 파일이 없어요! &e괜찮아요. 만들면 됩니다!");
-            File folder = new File("plugins/onsky");
-            if(folder.mkdir())
-                Bukkit.getLogger().info("&b생성 성공! &e계속해볼까?");
-            File file = new File("plugins/onsky/save.yml");
-            try {
-                file.createNewFile();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            //e.printStackTrace();
-        }
+        loadFiles();
 
-        try {
-            saveFile.save("plugins/onsky/save.yml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
 
@@ -97,17 +78,14 @@ public final class Onsky extends JavaPlugin {
             e.printStackTrace();
         }
 
+
         Bukkit.getLogger().info(TextUtil.toColor("&e필요한 모든 것을 불러왔어. 즐거운 마인크래프트 하자!"));
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        try {
-            saveFile.save("plugins/onsky/save.yml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saveFiles();
 
         Bukkit.getLogger().info("안녕! 다음에 봐!");
     }
@@ -120,6 +98,37 @@ public final class Onsky extends JavaPlugin {
         return saveFile;
     }
 
+    public static void loadFiles(){
+        try {
+            saveFile.load("plugins/onsky/save.yml");
+        } catch (IOException | InvalidConfigurationException e) {
+            Bukkit.getLogger().warning("&c이런! 파일이 없어요! &e괜찮아요. 만들면 됩니다!");
+            File folder = new File("plugins/onsky");
+            if(folder.mkdir())
+                Bukkit.getLogger().info("&b생성 성공! &e계속해볼까?");
+            File file = new File("plugins/onsky/save.yml");
+            try {
+                file.createNewFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            //e.printStackTrace();
+        }
+
+        try {
+            saveFile.save("plugins/onsky/save.yml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveFiles(){
+        try {
+            saveFile.save("plugins/onsky/save.yml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private Class[] getClasses(String packageName) throws IOException {
         ClassLoader classloader = this.getClassLoader();
         ClassPath path = ClassPath.from(classloader);
