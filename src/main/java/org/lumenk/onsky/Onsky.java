@@ -8,6 +8,12 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.lumenk.onsky.commands.*;
+import org.lumenk.onsky.completers.DeleteHomeCommandCompleter;
+import org.lumenk.onsky.completers.HomeCommandCompleter;
+import org.lumenk.onsky.completers.OnSkyDummyCommandCompleter;
+import org.lumenk.onsky.listeners.PlayerJoinListener;
+import org.lumenk.onsky.listeners.ServerPingListener;
 import org.lumenk.onsky.utils.TextUtil;
 
 import java.io.File;
@@ -24,7 +30,7 @@ public final class Onsky extends JavaPlugin {
         // Plugin startup logic
         instance = this;
         Bukkit.getServer().getLogger().warning(TextUtil.toColor("&bHello &fServer!"));
-        Bukkit.getServer().getLogger().info("OnSky가 활성화되었습니다");
+        Bukkit.getServer().getLogger().info("안녕!나는 OnSky" + getDescription().getVersion() + "이라고 해!");
 
         Class[] classes;
         //Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -35,20 +41,55 @@ public final class Onsky extends JavaPlugin {
         loadFiles();
 
 
-
-
         Bukkit.getLogger().info(TextUtil.toColor("&e이제 내부적으로 필요한 객체를 생성할거야!"));
         Bukkit.getLogger().info(TextUtil.toColor("&e첫 번째로 &6Listener&e를 불러올거야"));
+
+        ArrayList<Class> classList = new ArrayList<>();
+        classList.add(PlayerJoinListener.class);
+        classList.add(ServerPingListener.class);
+        classList.forEach(c -> {
+            try {
+                Bukkit.getPluginManager().registerEvents((Listener) c.newInstance(), this);
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+        Bukkit.getLogger().info("총 " + classList.size() + "개의 Listener를 불러왔어.");
+        /*
         Listener listener;
         try{
             classes = getClasses("org.lumenk.onsky.listeners");
             for (Class aClass : classes)
                 Bukkit.getPluginManager().registerEvents((Listener) aClass.newInstance(), this);
-        } catch (IOException | InstantiationException | IllegalAccessException e) {
+            Bukkit.getLogger().info("총 " + classes.length + "개의 Listener을 불러왔어!");
+        } catch (InstantiationException | IllegalAccessException | IOException e) {
             e.printStackTrace();
         }
+         */
+
 
         Bukkit.getLogger().info("&e두 번째로는 &e명령어&e를 불러올거야!");
+        classList.clear();
+
+        classList.add(DeleteHomeCommand.class);
+        classList.add(HomeCommand.class);
+        classList.add(HomeListCommand.class);
+        classList.add(OnSkyDummyCommand.class);
+        classList.add(SetHomeCommand.class);
+        classList.forEach(aClass -> {
+            try {
+                CommandExecutor commandExecutor = (CommandExecutor) aClass.newInstance();
+                Bukkit.getPluginCommand(commandExecutor.toString()).setExecutor(commandExecutor);
+                Bukkit.getLogger().info("명령어 " + commandExecutor.toString() + "을 무사히 불러왔어!");
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+
+
+        /*
         try {
             classes = getClasses("org.lumenk.onsky.commands");
             CommandExecutor commandExecutor;
@@ -57,14 +98,28 @@ public final class Onsky extends JavaPlugin {
                 Bukkit.getPluginCommand(commandExecutor.toString()).setExecutor(commandExecutor);
                 Bukkit.getLogger().info("명령어 " + commandExecutor.toString() + "을 무사히 불러왔어!");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Bukkit.getLogger().info("앗! 명령어를 불러오는 도중에 오류가 났어!");
-        } catch (IllegalAccessException | InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException | IOException e) {
             e.printStackTrace();
         }
+         */
+        Bukkit.getLogger().info("총 " + classList.size() + "개의 명령어를 불러왔어.");
 
         Bukkit.getLogger().info("&e세 번째로는 &6Tab Completer&e을 불러올 거야!");
+        classList.clear();
+        classList.add(DeleteHomeCommandCompleter.class);
+        classList.add(HomeCommandCompleter.class);
+        classList.add(OnSkyDummyCommandCompleter.class);
+        classList.forEach(c -> {
+            try {
+                TabCompleter completer = (TabCompleter) c.newInstance();
+                getCommand(completer.toString()).setTabCompleter(completer);
+                Bukkit.getLogger().info("명령어 " + completer.toString() + "에 대한 Tab Completer를 설정했어");
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+        Bukkit.getLogger().info("총 " + classList.size() + "개의 명령어의 Completer를 불러왔어.");
+        /*
         try {
             classes = getClasses("org.lumenk.onsky.completers");
             TabCompleter completer;
@@ -73,11 +128,13 @@ public final class Onsky extends JavaPlugin {
                 Bukkit.getLogger().info("명령어 " + completer.toString() + "에 대한 completer를 불러오고 있어");
                 Bukkit.getPluginCommand(completer.toString()).setTabCompleter(completer);
             }
-        } catch (IOException | IllegalAccessException | InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException | IOException e) {
             e.printStackTrace();
         }
+         */
 
 
+        classList.clear();
         Bukkit.getLogger().info(TextUtil.toColor("&e필요한 모든 것을 불러왔어. 즐거운 마인크래프트 하자!"));
     }
 
@@ -129,6 +186,7 @@ public final class Onsky extends JavaPlugin {
         }
     }
     private Class[] getClasses(String packageName) throws IOException {
+
         ClassLoader classloader = this.getClassLoader();
         ClassPath path = ClassPath.from(classloader);
         ArrayList<Class> arr = new ArrayList<>();
@@ -147,4 +205,6 @@ public final class Onsky extends JavaPlugin {
         }
         return  result;
     }
+
+
 }

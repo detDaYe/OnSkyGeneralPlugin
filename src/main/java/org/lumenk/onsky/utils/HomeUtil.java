@@ -39,8 +39,8 @@ public class HomeUtil {
         return true;
     }
     public static List<String> getHomes(Player player){
-        List temp = Onsky.getSaveFile().getList(player.getUniqueId() + ".home.homelist");
-        if(temp == null) return new ArrayList<String>();
+        List<?> temp = Onsky.getSaveFile().getList(player.getUniqueId() + ".home.homelist");
+        if(temp == null) return new ArrayList<>();
         ArrayList<String> result = new ArrayList<>();
         temp.forEach(h-> result.add(h.toString()));
         return result;
