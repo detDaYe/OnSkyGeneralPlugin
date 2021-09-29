@@ -19,6 +19,7 @@ repositories {
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+    implementation("com.google.guava:guava:30.1.1-jre")
 }
 
 def targetJavaVersion = 8
